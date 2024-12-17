@@ -1,5 +1,7 @@
 # Summary
 
+- [Introduction](./Introduction.md)
+- [Getting started](./GettingStarted.md)
 - [Autostart](./Autostart.md)
 - [Configuration](./Configuration.md)
-- [CustomLayout](./CustomLayout.md)
+- [Custom Layout](./CustomLayout.md)

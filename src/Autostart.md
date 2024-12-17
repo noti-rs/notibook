@@ -2,7 +2,7 @@
 
 This guide will help you configure autostart `Noti` using `systemd` user services and `D-Bus` activation.
 
-> [!WARNING]
+> **WARNING:**
 > Specific configurations might vary slightly depending on your distribution and desktop setup.
 
 ## Understanding Environment Variables

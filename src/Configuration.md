@@ -1,136 +1,103 @@
-# Config Properties
+# 3. Configuration
 
-The Noti application have a way to be configured by TOML config file which placed
-at specific position. Here a priority of positions:
+## 3.1 Understanding Noti's Configuration
+
+Noti looks for configuration files in the following locations (in order of priority):
 
 1. `$XDG_CONFIG_HOME/noti/config.toml`
 2. `$HOME/.config/noti/config.toml`
 
-Use this file as the specification of configuration properties.
+### Hot Reload
 
-> [!NOTE]
-> Don't need to reload the application after changing config properties because it have
-> `hot-reload` or `watch-mode`.
+Noti supports hot-reloading most configuration changes. Simply save your config file, and Noti will automatically apply the new settings.
 
-## Types
+### Types
 
-Before of all properties, need to understand a few primitive type. The complex types like array or table will be explained in place.
+Before of all properties, need to understand a few primitive types. The complex types like array or table will be explained in place.
 
-| Type     | Description                                                                                                                                                                                                          |
-| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `bool`   | A boolean value                                                                                                                                                                                                      |
-| `u8`     | An unsigned integer of 8 bit                                                                                                                                                                                         |
-| `u16`    | An unsigned integer of 16 bit                                                                                                                                                                                        |
-| `String` | A string. Usually it used as enumeration                                                                                                                                                                             |
-| `[..]`   | Array containing various type. Used as tuple                                                                                                                                                                         |
-| `Color`  | The hex value which is started by hashtag (#) and wrapped by doubled quotes (defines as string). It can have three, six or eight symbols which represent RGB (including alpha-channel in 8-symboled hex as opacity). |
-| `Path`   | The path to particular file or directory, represented as string (surrounded by double quotes). Currently supported expansion by environment variable, tilde, glob (asterisks) and the relative paths.                |
+| Type     | Description                                                                                                                                                     |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bool`   | A boolean value                                                                                                                                                 |
+| `u8`     | An unsigned integer of 8 bit                                                                                                                                    |
+| `u16`    | An unsigned integer of 16 bit                                                                                                                                   |
+| `String` | A string,typically used as an enumeration variant                                                                                                               |
+| `[..]`   | Array containing various type. Used as tuple                                                                                                                    |
+| `Color`  | A hexadecimal value, which is started by hashtag (#) and wrapped by doubled quotes (defines as string). It can have 3, 6 or 8 symbols, which represents `RGBA`. |
+| `Path`   | The path to particular file or directory                                                                                                                        |
 
-## Importing
+### Configuration Structure
 
-You can move part of configuration values into other files and import them in
-main configuration files by keyword `use` and accepts array of `Path`s. Accepts
-any valid path, including path that contains environment variables,
-starting with tilde, containing glob (asterisks).
+The Noti configuration is divided into four main property groups:
 
-The syntax:
-
-```toml
-use = [
-    "$XDG_CONFIG_HOME/noti/other_cfg_file.toml",
-    "~/.config/noti/special_cfg_file.toml",
-    "/home/bebra/.config/super-sepcial-file.toml",
-
-    # The relative path also are supported
-    "./apps/Spotify.toml",
-    "apps/Spotify.toml",
-]
-```
-
-> [!TIP]
-> Importing the same file more than one time is discouraged and, please, avoid
-> this.
-
-### Config priority
-
-Main thought - current configuration file is more prioritized than imported config file.
-
-So, if the same configuration properties declares twice - in current configuration file and
-in imported file, the application will pick the value from the **current** configuration file.
-
-And, please, avoid any ambiguity in configuration files. The application will try to merge
-these configuration values, but the `Noti` developers won't guarantee that it will work in
-that way as you expected. Instead of this, we recommend declare whole thing in one place
-and import it. For example, you can declare [themes](#themes) in other files and import them
-into main config file.
-
----
-
-## Property groups
-
-There is four groups of properties:
-
-- [General](#general)
-- [Display](#display)
-- [Themes](#themes)
-- [Apps](#apps)
+- [General](#32-general-settings)
+- [Display](#33-display-configuration)
+- [Themes](#34-themes)
+- [Apps](#35-app-specific-configuration)
 
 Each of them belongs to specific idea. So the reading order is not matter. But we recommend you
 to go to through from the first one to the last one.
 
----
+## 3.2 General Settings
 
-## General
+General settings apply to the entire notification system and control global behavior.
 
-The 'general' word means that it applies to application or all banners together. Here a table of possible general properties and below we'll go through all properties.
-
-| Property name    | Description                                         | Type                  | Default value |
-| :--------------- | :-------------------------------------------------- | :-------------------- | :-----------: |
-| `font`           | [See desc](#font)                                   | `String`              |  "Noto Sans"  |
-| `width`          | The width of banner frame.                          | `u16`                 |      300      |
-| `height`         | The height of banner frame.                         | `u16`                 |      150      |
-| `anchor`         | [See desc](#anchor)                                 | `String`              |  "top right"  |
-| `gap`            | The space size between two banners. Measures in px. | `u8`                  |      10       |
-| `offset`         | [See desc](#offset)                                 | `[u8, u8]`            |    [0, 0]     |
-| `sorting`        | [See desc](#sorting)                                | `String` or `Sorting` |   "default"   |
-| `idle_threshold` | [See desc](#idle-threshold)                         | `String`              |    "5 sec"    |
+| Property name    | Description                                                       | Type                  | Default value |
+| :--------------- | :---------------------------------------------------------------- | :-------------------- | :-----------: |
+| `font`           | Font                                                              | `String`              |  "Noto Sans"  |
+| `width`          | Width of banner frame                                             | `u16`                 |      300      |
+| `height`         | Height of banner frame                                            | `u16`                 |      150      |
+| `anchor`         | Screen position where notifications appear                        | `String`              |  "top right"  |
+| `gap`            | Space size between two banners. Measures in px                    | `u8`                  |      10       |
+| `offset`         | Distance from screen edges                                        | `[u8, u8]`            |    [0, 0]     |
+| `sorting`        | How notifications are ordered                                     | `String` or `Sorting` |   "default"   |
+| `idle_threshold` | Duration that pauses notification timeouts during user inactivity | `String`              |    "5 sec"    |
+| `limit`          | Maximum number of notifications on the screen                     | `u8`                  |       0       |
 
 ### Font
 
-Accepts the font name. It can be separated or not by spaces. The application can use only the font
-name which can be used as pattern in `fc-list` command. So you can't use already styled font like
-"Noto Sans Bold". But the application internally can load font with needed styles if it is possible.
+Accepts the font name, which may or may not be separated by spaces. The application can only use the font name as recognized by the `fc-list` command pattern. Therefore, styled fonts like "Noto Sans Bold" cannot be used directly. However, if possible, the application can internally load the font with the required styles.
+
+Example:
+
+```toml
+font = "JetBrainsMono Nerd Font"
+```
 
 ### Anchor
 
-The anchor of current monitor for current window instance. It means where you want to see appearing
-notification banners. The possible values:
+The anchor of the current monitor for the current window instance, which determines where the notification banners will appear. The possible values are:
 
-- `"top"`
-- `"top-left"` or `"top left"`
-- `"top-right"` or `"top right"`
-- `"left"`
-- `"right"`
-- `"bottom"`
-- `"bottom-left"` or `"bottom left"`
-- `"bottom-right"` or `"bottom right"`
+```
+top-left         top         top-right
+
+left              +              right
+
+bottom-left     bottom    bottom-right
+```
+
+Example:
+
+```toml
+anchor = "top-right"
+```
 
 ### Offset
 
-The offset from edges for window instance. The first value is the offset
-by x-axis, the second value - by y-axis.
+The offset from the edges for the window instance. The first value represents the offset along the `x-axis`, and the second value represents the offset along the `y-axis`.
 
-For example, you picked `"bottom-left"` anchor and `[5, 10]` offset and
-it means that the window instance will be placed at bottom-left edge of a
-current monitor with offsets by 5 from left edge and by 10 from bottom edge.
+For example, if you choose the `"bottom-left"` anchor and set an offset of `[5, 10]`, the window instance will be positioned at the bottom-left edge of the current monitor, with a 5-pixel offset from the left edge and a 10-pixel offset from the bottom edge.
+
+Example:
+
+```toml
+offset = [10, 10]
+```
 
 ### Sorting
 
-The property which set rule of banner sorting. It's very helpful when you
-want to place banner with critical urgency at top or bottom.
+The property that determines the banner sorting rule. This is particularly useful when you want to position banners with critical urgency at the top or bottom.
 
-You can define only a string and the sorting always will be ascending. But
-when you want to sort in descending, you have to define a table:
+You can define a string for ascending sorting by default. However, to sort in descending order, you must define a table:
 
 | Property name | Type     | Default value |
 | :------------ | :------- | :-----------: |
@@ -150,45 +117,55 @@ Possible values of the `ordering` property name:
 - "ascending" (also possible short name "asc")
 - "descending" (also possible short name "desc")
 
+Example:
+
+```toml
+[general.sorting]
+by = "id"
+ordering = "descending"
+```
+
 ### Idle Threshold
 
 When `idle_threshold` is set, notifications will not be removed or expired while the user is idle beyond the configured threshold. Once the user is active again, the timeout resumes.
 This setting accepts a human-readable duration format (e.g., `"15 minutes"`, `"30s"`).
 If set to `"none"`, the idle timeout behavior is disabled.
 
-> [!WARNING]
+Example:
+
+```toml
+idle_threshold = "5 min"
+```
+
+> **WARNING:**
 > Changes to the `idle_threshold` setting cannot be applied via hot-reload. To apply a new value, a full restart of the application is required.
 
----
+### Limit
 
-## Display
+The maximum number of notifications that can be displayed at once. Once this limit is reached, any new notifications will be queued and shown once the currently displayed ones either time out or are manually dismissed. A value of `0` means there is no limit.
 
-To change the visual styles of banners use `display` table. You cad define
-the values of `display` table for all the applications at the same time and
-use specific values per application by [app config](#apps).
+Example:
 
-If you curious about banner layout, please visit [the other document](#BannerLayout.md)
-that was made specifically for it.
+```toml
+limit = 3
+```
 
-The display properties affects only and only for a banner, not the window entire.
-The currently possible properties of `display` table:
+## 3.3 Display Configuration
 
-| Property name                  | Description                                         | Type                                                                    | Default value |
-| :----------------------------- | :-------------------------------------------------- | :---------------------------------------------------------------------- | :-----------: |
-| [layout](./Filetype.md)        | Use the custom layout by providen path              | `Path`                                                                  |   "default"   |
-| [theme](#themes)               | Use the [theme](#themes) by name                    | `String`                                                                |       -       |
-| [image](#image)                | Image properties                                    | `Image`                                                                 |       -       |
-| [padding](#padding-and-margin) | The spacing from the banner's edge to inner content | `u8` or `[u8, u8]` or `[u8, u8, u8]` or `[u8, u8, u8, u8]` or `Spacing` |       0       |
-| [border](#border)              | Border properties                                   | `Border`                                                                |       -       |
-| [text](#text)                  | Text properties (alias for `title` and `body`)      | `Text`                                                                  |       -       |
-| [title](#text)                 | Title text properties                               | `Text`                                                                  |       -       |
-| [body](#text)                  | Body text properties                                | `Text`                                                                  |       -       |
-| [markup](#markup)              | Enables HTML style markup                           | `bool`                                                                  |     true      |
-| [timeout](#timeout)            | Sets the timeout of banner                          | `u16` or `Timeout`                                                      |       0       |
+The `display` section allows you to customize the visual aspects of notifications.
 
-The [layout](./Filetype.md) property should have or `"default"` value or path to file in which
-describes layout for banner. You can pass path with environment variables like
-`"$XDG_CONFIG_HOME/noti/File.noti"` or use tilde - `"~/.config/noti/File.noti`.
+| Property name                  | Description                                     | Type                                                                    | Default value |
+| :----------------------------- | :---------------------------------------------- | :---------------------------------------------------------------------- | :-----------: |
+| [layout](./CustomLayout.md)    | Custom layout path                              | `Path`                                                                  |   "default"   |
+| [theme](#34-themes)            | Theme name                                      | `String`                                                                |       -       |
+| [image](#image)                | Image properties                                | `Image`                                                                 |       -       |
+| [padding](#padding-and-margin) | Spacing from the banner's edge to inner content | `u8` or `[u8, u8]` or `[u8, u8, u8]` or `[u8, u8, u8, u8]` or `Spacing` |       0       |
+| [border](#border)              | Border properties                               | `Border`                                                                |       -       |
+| [text](#text)                  | Text properties (alias for `title` and `body`)  | `Text`                                                                  |       -       |
+| [title](#text)                 | Title text properties                           | `Text`                                                                  |       -       |
+| [body](#text)                  | Body text properties                            | `Text`                                                                  |       -       |
+| [markup](#markup)              | Enables HTML markup                             | `bool`                                                                  |     true      |
+| [timeout](#timeout)            | Banner timeout                                  | `u16` or `Timeout`                                                      |       0       |
 
 The `Spacing` table:
 
@@ -201,39 +178,41 @@ The `Spacing` table:
 | vertical   | Spacing from top and bottom together (incompatible with top or bottom keys) | `u8` |
 | horizontal | Spacing from left and right together (incompatible with left or right keys) | `u8` |
 
-### Padding and margin
+Example:
 
-Within scope of this application, the padding and margin have different meaning.
-The padding is the spacing from the banner edges for inner elements, it's like giving the content area smaller.
-The margin is the spacing from the edges of remaining area and other inner elements.
+```toml
+[display]
+[display.image]
+max_size = 32,
+rounding = 8,
 
-> [!NOTE]
-> If you have issue that the image or the text doesn't show in banner, it's maybe
-> because of large value of padding or margins that the content can't fit into
-> remaining space.
+padding = 8
+border = { size = 2, radius = 10 }
 
-Here are two ways to declare properties for the padding and the margins:
+[display.text]
+wrap = true,
+ellipsize_at = "end",
 
-- [CSS-like](#css-like)
-- [Explicit](#explicit)
-
-#### CSS-like
-
-If you familiar with CSS, you know that the padding or the margin can be applied in single row:
-
-```css
-body {
-  padding: 0 5; /* Applies vertical and horizontal paddings respectively */
-  margin: 3 2 5; /* Applies top, horizontal and bottom paddings respectively */
-}
-
-main {
-  padding: 1 2 3 4; /* Applies top, right, bottom, left paddings respectively */
-  margin: 3; /* All-directional margin */
-}
+[display.timeout]
+default = 3000
+critical = 0
 ```
 
-In the TOML config file you can do it using array:
+### Padding and Margin
+
+In the context of this application, padding and margin serve distinct purposes, both relating to the spacing around and within elements.
+
+- Padding refers to the space between the content of an element (such as text or an image) and the edges of the element itself. Essentially, padding is the internal spacing, shrinking the area available for the content to fit within the boundaries of the element.
+- Margin, on the other hand, is the space between the outer edges of an element and the surrounding elements or the edges of the container. It provides external spacing that separates one element from another.
+
+> **Note:**
+> If you're facing an issue where the content, like an image or text, isn't displaying correctly within a banner, the problem may lie in the padding or margin values being set too high. Excessive padding or margin could reduce the space available for the content, causing it to overflow or not fit within the available area.
+
+#### Declaring Padding and Margin Properties
+
+##### CSS-like
+
+If you familiar with CSS, you know that the padding or the margin can be applied in single row, in the TOML config file you can do it using array:
 
 ```toml
 # Applies vertical and horizontal paddings respectively
@@ -249,10 +228,9 @@ padding = [1, 2, 3, 4]
 margin = 3
 ```
 
-#### Explicit
+##### Explicit
 
-If you don't like the CSS-like properties, here an explicit way. You can use table instead the array and write directions as keys: top, bottom, right and left.
-Also if you wanna apply the same value for top and bottom (right and left) together, here the vertical (horizontal) keys.
+If you prefer a more detailed approach, you can use an explicit syntax where directions are specified as keys: top, bottom, right, and left. You can also use shorthand keys for vertical and horizontal margins or paddings.
 
 ```toml
 # Sets only top padding
@@ -263,101 +241,110 @@ padding = { top = 5, right = 6 }
 
 # Instead of
 # padding = { top = 5, right = 6, bottom = 5 }
-# Write
+# You can write
 padding = { vertical = 5, right = 6 }
 
-# If there are collisions of values, an error will be thrown due to ambiguity.
-# padding = { top = 5, vertical = 6 }
+# Conflicting values will result in an error due to ambiguity:
+# padding = { top = 5, vertical = 6 } --- ERROR
 
 # You can apply the same way for margin
 margin = { top = 5, horizontal = 10 }
 
-# For all-directional padding or margin, set only number as above in CSS
+# For all-directional padding or margin
 padding = 10
 margin = 5
 ```
 
 ### Image
 
-Usually the notification can contain the image or icon and it draws at the right of
-banner. More about it in [banner layout](BannerLayout.md#image). The `Noti` application
-can perform some actions which in result the image will look very pleasant for most users.
+Typically, the notification includes an image or icon, which is displayed on the left side of the banner.
 
 Here's a table of `Image` properties:
 
-| Property name   | Description                                                                                                                                            | Type                                                                    | Default value |
-| :-------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------- | :-----------: |
-| max_size        | Sets the max size for image and resizes it when width or height of image exceeds `max_size` value                                                      | `u16`                                                                   |      64       |
-| rounding        | It's a border-radius in CSS and used to round image corners                                                                                            | `u16`                                                                   |       0       |
-| margin          | Creates a spacing around image. If there is no space for image, the image will be squished.                                                            | `u8` or `[u8, u8]` or `[u8, u8, u8]` or `[u8, u8, u8, u8]` or `Spacing` |       0       |
-| resizing_method | Sets the resizing method for image when it exceeds `max_size`. Possible values: `"gaussian"`, `"nearest"`, `"triandle"`, `"catmull-rom"`, `"lanczos3"` | `String`                                                                |  "gaussian"   |
+| Property name   | Description                                                                                                                                   | Type                                                                    | Default value |
+| :-------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------- | :-----------: |
+| max_size        | Sets the max size for image and resizes it when width or height of image exceeds this value                                                   | `u16`                                                                   |      64       |
+| rounding        | Value used to round image corners                                                                                                             | `u16`                                                                   |       0       |
+| margin          | Spacing around image. If there is no space for image, the image will be squished.                                                             | `u8` or `[u8, u8]` or `[u8, u8, u8]` or `[u8, u8, u8, u8]` or `Spacing` |       0       |
+| resizing_method | Resizing method for image when it exceeds `max_size`. Possible values: `"gaussian"`, `"nearest"`, `"triandle"`, `"catmull-rom"`, `"lanczos3"` | `String`                                                                |  "gaussian"   |
 
 ### Border
 
-To notification banner you can apply border styles: border size and radius.
+You can apply border styles to the notification banner, including border size and border radius.
 
-- Border size - the width of stroke which is outlines around the banner.
-  It also reduces inner space of rectange.
-- Border radius - the radius which will applied for rounding the corners of banner.
+- Border size refers to the width of the stroke outlining the banner. It also reduces the available inner space within the rectangle.
+- Border radius defines how rounded the corners of the banner will be.
 
-> [!NOTE]
+> **Note:**
 > You can find that the behavior of banner rounding is different from other applications.
-> Here the simple rules for it: inner radius gets from formula $radius - size$.
+> The rule is simple: the inner radius is calculated as $radius - size$.
 > It means that inner rounding won't draws if border size exceeds the radius.
 
 The `Border` table:
 
-| Key    | Short description                                      | Type | Default value |
-| :----- | :----------------------------------------------------- | :--- | :-----------: |
-| size   | The width of stroke which is outlines around the banne | `u8` |       0       |
-| radius | The border radius for corner rounding                  | `u8` |       0       |
+| Key    | Short description                                   | Type | Default value |
+| :----- | :-------------------------------------------------- | :--- | :-----------: |
+| size   | Width of stroke which is outlines around the banner | `u8` |       0       |
+| radius | Border radius for corner rounding                   | `u8` |       0       |
 
 ### Text
 
-Currently the `Noti` application have only title and body, but they are interpreted as `Text` so they both
-are described here. Also the `text` property was introduced which can be used for title and body at the same
-time. The idiomatic way is using `text` when you want to define the same values for `title` and `body`,
-otherwise define values in `title` or `body`. It means `title` and `body` **inherits** from `text` property.
+Currently, the `Noti` application has only a **title** and **body**, but both are treated as `Text`, so they are covered here. Additionally, a new `text` property has been introduced, which can be used for both the title and body at the same time. The recommended approach is to use the `text` property when you want to set the same values for both the title and body. Otherwise, you can define separate values for the title or body. This means that the **title** and **body** properties **inherit** from the `text` property.
 
-Priority of properties:
+Property priority:
 
-1. Picks `title` or `body` properties;
-2. If some values is not defined then check `text` properties and replace by it;
-3. If some values still not defined then pick default values.
+1. First, the `title` or `body` properties are used.
+2. If any values are missing, the `text` property is checked, and its values are used instead.
+3. If any values are still undefined, default values are applied.
 
 The `Text` table:
 
-| Key           | Short description                                                                                                                                                                           | Type      | Default value |
-| :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------- | :-----------: |
-| wrap          | Sets possibility to line breaking when text overflows a line                                                                                                                                | `bool`    |     true      |
-| ellipsize_at  | Ellipsizes a text if it's totally overflows an area. Possible values: "end" and "middle". "end" - put ellipsis at end of word, "middle" - cut word at some middle of word and puts ellipsis | `String`  |     "end"     |
-| style         | Sets the style for whole text area. Possible values: "regular", "bold", "italic", "bold italic"                                                                                             | `String`  |   "regular"   |
-| margin        | The text spacing from edges of remaining area                                                                                                                                               | `Spacing` |       0       |
-| justification | The text justification. Possible values: "left", "right", "center", "space-between"                                                                                                         | `String`  |    "left"     |
-| line_spacing  | The gap between wrapped text lines. Measures in px                                                                                                                                          | `u8`      |       0       |
-| font_size     | The size of font. Measures in px                                                                                                                                                            | `u8`      |      12       |
+| Key           | Short description                                                                                                                                                                                   | Type      | Default value |
+| :------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------- | :-----------: |
+| wrap          | Sets possibility to line breaking when text overflows a line                                                                                                                                        | `bool`    |     true      |
+| ellipsize_at  | Ellipsizes a text if it's totally overflows an area. Possible values: `"end"` and `"middle"`. `"end"` - put ellipsis at end of word, `"middle"` - cut word at some middle of word and puts ellipsis | `String`  |     "end"     |
+| style         | Font style. Possible values: `"regular"`, `"bold"`, `"italic"`, `"bold italic"`                                                                                                                     | `String`  |   "regular"   |
+| margin        | Text spacing from edges of remaining area                                                                                                                                                           | `Spacing` |       0       |
+| justification | Text justification. Possible values: `"left"`, `"right"`, `"center"`, `"space-between"`                                                                                                             | `String`  |    "left"     |
+| line_spacing  | Gap between wrapped text lines in `px`                                                                                                                                                              | `u8`      |       0       |
+| font_size     | Font size in `px`                                                                                                                                                                                   | `u8`      |      12       |
 
-For more explanation how the text draws, please visit [the other documentation about text](BannerLayout.md#text).
+Example:
+
+```toml
+[display.text]
+justification = "left"
+margin = { left = 15 }
+wrap = false
+ellipsize_at = "middle"
+font_size = 18
+
+[display.title]
+style = "bold"
+
+[display.body]
+markup = false
+```
 
 ### Markup
 
-Enables text styling using HTML tags.
-For body applies the `markup` property, because the body can contain the HTML-like tags:
+Enables text styling through HTML tags.
 
-- \<b\> - bold style
-- \<i\> - italic style
-- \<u\> - underline style
-- \<a href="https://google.com"&gt; - the link
-- \<img src="path/to/image" alt="image description"\> - the image inside text
+For the body, the `markup` property is applied, allowing the use of HTML-like tags, such as:
 
-You can turn off the `markup` property by setting `false` value.
+- `<b>` - bold style
+- `<i>` - italic style
+- `<u>` - underline style
+- `<a href="https://google.com">` - a hyperlink
+- `<img src="path/to/image" alt="image description">` - an image embedded in the text
+
+You can disable the `markup` property by setting it to `false`.
 
 ### Timeout
 
-The time in milliseconds when the notification banner should be closed by expiration
-since creation.
+The time in milliseconds after which the notification banner will automatically close due to expiration, starting from when it is created.
 
-There is also extended timeout configuration - per urgency of banners by `Timeout` table.
+Additionally, there is an extended timeout configuration based on the urgency of the banners, defined in the `Timeout` table.
 
 The `Timeout` table:
 
@@ -368,32 +355,20 @@ The `Timeout` table:
 | normal   | Override timeout value for 'normal' urgency banners   | `u16` |
 | critical | Override timeout value for 'critical' urgency banners | `u16` |
 
-> [!NOTE]
+> **Note:**
 > The value `0` means will never expired.
 
----
+## 3.4 Themes
 
-## Themes
-
-This is feature of the `Noti` application. Instead of defining the color values among
-config properties in main config file you can define array of tables named `theme`. You should
-put name of theme, otherwise it will be skipped. And use the name of theme in `display.theme`.
-
-> [!NOTE]
-> Theme names should have **exact** match. Instead application will use the default theme.
+Define custom color schemes for different notification urgency levels:
 
 The `Theme` table:
 
 | Key      | Type     | Default value | Short description                        |
 | :------- | :------- | :-----------: | :--------------------------------------- |
-| low      | `Colors` |       -       | The colors for 'low' urgency banner      |
-| normal   | `Colors` |       -       | The colors for 'normal' urgency banner   |
-| critical | `Colors` |       -       | The colors for 'critical' urgency banner |
-
-### Colors
-
-Currently possible only three things that can be modified by colors: `foreground`, `background` and
-`border`.
+| low      | `Colors` |       -       | The colors for `low` urgency banner      |
+| normal   | `Colors` |       -       | The colors for `normal` urgency banner   |
+| critical | `Colors` |       -       | The colors for `critical` urgency banner |
 
 The `Colors` table:
 
@@ -403,57 +378,74 @@ The `Colors` table:
 | foreground | `Color` | "#000000" (but for `critical`: "#FF0000") | The foreground color which used for text |
 | border     | `Color` | "#000000" (but for `critical`: "#FF0000") | The border stroke color                  |
 
-**Example of theme usage**:
+Example:
 
 ```toml
-[display]
-theme = "my-theme"
-
 [[theme]]
-name = "my-theme"
+name = "dark-mode"
 
 [theme.normal]
-border = "#0F0" # green border for normal urgency
+background = "#1E1E2E"
+foreground = "#FFFFFF"
+border = "#444444"
 
 [theme.critical]
-border = "#F0F" # pink border for critical urgency
+background = "#FF0000"
+foreground = "#FFFFFF"
+border = "#000000"
 ```
 
----
+## 3.5 App-Specific Configuration
 
-## Apps
+The Noti application includes an app-specific configuration feature, allowing you to override the display table for a particular application.
 
-The `Noti` application have the huge feature named "app-config" in which you can redefine
-`display` table specifically for particular application.
+Here’s how the properties are selected:
 
-So need to introduce the rule of picking properties:
+- Check if the property is defined in the app-specific configuration.
+- If not, use the general display property.
+- If it’s still not defined in the general display property, use the default value.
 
-1. Check is there a defined property by app;
-2. If not then redefine by general display property;
-3. If is still not defined in general display property then pick default value.
+The `App` table:
 
-The format of defining `display` config per application:
+| Key     | Short description                                    | Type                                   |
+| :------ | :--------------------------------------------------- | :------------------------------------- |
+| name    | The name of application                              | `String`                               |
+| display | The display configuration table for this application | [`Display`](#36-display-configuration) |
+
+Example:
 
 ```toml
 [[app]]
 name = "Telegram Desktop"
 
-[app.display.border]
-size = 3
+[app.display]
+theme = "telegram-theme"
+padding = 10
+border = { size = 2, radius = 12 }
 
 [[app]]
 name = "Spotify"
 
 [app.display]
-padding = 3
-image = { max_size = 86 }
-
-# and so on..
+image = { max_size = 64 }
+timeout = 2000
 ```
 
-The `App` table:
+## 3.6 Importing
 
-| Key     | Short description                                    | Type                  |
-| :------ | :--------------------------------------------------- | :-------------------- |
-| name    | The name of application                              | `String`              |
-| display | The display configuration table for this application | [`Display`](#display) |
+You can import configuration files from other files:
+
+```toml
+use = [
+    "$XDG_CONFIG_HOME/noti/themes.toml",
+    "~/layouts/layout.toml",
+    "./apps/*"
+]
+```
+
+> **Note:**
+>
+> - Current configuration file takes precedence
+> - Avoid importing the same file multiple time
+> - Avoid circular dependencies
+> - Merge behavior is not guaranteed, so declare configurations carefully
