@@ -1,9 +1,16 @@
 # Summary
 
 - [Introduction](./Introduction.md)
-- [Getting started](./GettingStarted.md)
+- [Getting started](./GettingStarted/GettingStarted.md)
+  - [Installation](./GettingStarted/Installation.md)
+  - [Running](./GettingStarted/Running.md)
 - [Autostart](./Autostart.md)
-- [Configuration](./Configuration.md)
+- [Configuration](./Configuration/Configuration.md)
+  - [General](./Configuration/General.md)
+  - [Display](./Configuration/Display.md)
+  - [Themes](./Configuration/Themes.md)
+  - [App-Specific Configuration](./Configuration/Apps.md)
 - [Custom Layout](./CustomLayout.md)
 - [Tips and Tricks](./Tips.md)
 - [Troubleshooting](./Troubleshooting.md)
+- [Developer Guide](./Dev.md)
