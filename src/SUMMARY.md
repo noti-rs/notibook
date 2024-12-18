@@ -13,5 +13,7 @@
 - [Custom Layout](./CustomLayout.md)
 - [Tips and Tricks](./Tips.md)
 - [Troubleshooting](./Troubleshooting.md)
-- [Examples](./Examples.md)
+- [Examples](./Examples/Examples.md)
+  - [Configurations](./Examples/Configurations.md)
+  - [Scripts](./Examples/Scripts.md)
 - [Developer Guide](./Dev.md)

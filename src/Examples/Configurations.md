@@ -1,4 +1,4 @@
-# Examples
+# Example configurations
 
 ## `jsonmaf1a`'s setup
 
