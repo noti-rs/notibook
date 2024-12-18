@@ -10,10 +10,10 @@ Here’s how the properties are selected:
 
 The `App` table:
 
-| Key     | Short description                                    | Type                                   |
-| :------ | :--------------------------------------------------- | :------------------------------------- |
-| name    | The name of application                              | `String`                               |
-| display | The display configuration table for this application | [`Display`](#36-display-configuration) |
+| Key     | Short description                                    | Type                      |
+| :------ | :--------------------------------------------------- | :------------------------ |
+| name    | The name of application                              | `String`                  |
+| display | The display configuration table for this application | [`Display`](./Display.md) |
 
 ```toml
 [[app]]
