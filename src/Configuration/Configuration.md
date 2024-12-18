@@ -29,10 +29,10 @@ Before of all properties, need to understand a few primitive types. The complex 
 
 The Noti configuration is divided into four main property groups:
 
-- [General](#general-settings)
-- [Display](#display-configuration)
-- [Themes](#themes)
-- [Apps](#app-specific-configuration)
+- [General](./General.md)
+- [Display](./Display.md)
+- [Themes](./Themes.md)
+- [Apps](./Apps.md)
 
 Each of them belongs to specific idea. So the reading order is not matter. But we recommend you
 to go to through from the first one to the last one.
