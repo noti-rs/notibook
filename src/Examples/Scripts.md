@@ -1,15 +1,17 @@
 # Example scripts
 
-## Volume Control with Pamixer
+## Volume Control
 
 This script allows you to adjust the volume (increase, decrease, or mute) and displays notifications for each action.
 
 <details style="cursor: pointer">
   <summary>Click to reveal</summary>
 
-### Requirements
+### Requirements:
 
 - **pamixer**: To control the audio volume.
+
+### Script:
 
 ```bash
 #!/bin/bash
@@ -56,16 +58,18 @@ Bind these commands to keyboard shortcuts for easier access.
 
 </details>
 
-## Brightness Control with Brightnessctl
+## Brightness Control
 
 This script allows you to adjust the screen brightness and displays notifications for each action.
 
 <details style="cursor: pointer">
   <summary>Click to reveal</summary>
 
-### Requirements
+### Requirements:
 
 - **brightnessctl**: To control the screen brightness.
+
+### Script:
 
 ```bash
 #!/bin/bash
@@ -115,10 +119,12 @@ This script switches between keyboard layouts and displays a notification showin
 <details style="cursor: pointer">
   <summary>Click to reveal</summary>
 
-### Requirements
+### Requirements:
 
 - **hyprctl**: To manage devices and switch keyboard layouts.
 - **kb-switcher**(optional): See [hyprland_kb_switcher](https://github.com/JarKz/hyprland_kb_switcher/)
+
+### Script:
 
 ```bash
 #!/bin/sh
