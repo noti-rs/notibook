@@ -4,3 +4,10 @@ language = "en"
 multilingual = false
 src = "src"
 title = "notibook"
+
+[output.html]
+smart-punctuation = true
+git-repository-url = "https://github.com/noti-rs/noti"
+edit-url-template = "https://github.com/noti-rs/notibook/edit/main/{path}"
+git-repository-icon = "fa-github"
+no-section-label = false
