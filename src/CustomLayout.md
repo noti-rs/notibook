@@ -20,7 +20,15 @@ This can be set globally or for specific applications. Once specified, create th
 > - Border, padding, and margin settings are overridden
 > - Only general configurations, colors, and non-styling settings remain active
 
----
+## Types
+
+The available property types are limited to a few:
+
+- **Literal**: A continuous sequence of characters not enclosed in double quotes, always treated as a string.
+- **UInt**: An unsigned integer.
+- **[Type value](#type-values)**: Refer to the linked section for details.
+
+The `Noti` application includes intelligent conversion for `Literal` types, allowing them to represent **boolean**, **color**, **type**, or other supported formats as needed.
 
 ## Layout Basics
 
