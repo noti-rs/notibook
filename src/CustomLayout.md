@@ -14,7 +14,7 @@ display.layout = "path/to/your/layout/file.noti"
 
 This can be set globally or for specific applications. Once specified, create the layout file and define your custom design.
 
-> [!WARNING]
+> **WARNING**:
 > When using a custom layout:
 >
 > - Border, padding, and margin settings are overridden

@@ -1,6 +1,6 @@
-# 2. Getting Started with Noti
+# Getting Started with Noti
 
-## 2.1 Prerequisites
+## Prerequisites
 
 Before installing Noti, ensure you have the following:
 
@@ -8,7 +8,7 @@ Before installing Noti, ensure you have the following:
 - Rust toolchain (`rustc` and `cargo`)
 - Basic understanding of terminal commands
 
-## 2.2 Installation
+## Installation
 
 ### Installing via Cargo (Recommended)
 
@@ -26,8 +26,6 @@ cargo install --path .
 
 ### Building from Source
 
-If you prefer to build from source:
-
 ```bash
 # Clone the repository
 git clone https://github.com/noti-rs/noti.git
@@ -40,7 +38,7 @@ cargo build --release
 cargo install --path .
 ```
 
-## 2.3 Run
+## Running
 
 To confirm Noti is installed correctly:
 
@@ -59,7 +57,7 @@ After installation, you can start Noti manually:
 noti run
 ```
 
-## 2.4 Automatic Startup
+## Automatic Startup
 
 ### Session Startup Script
 
@@ -73,4 +71,4 @@ This is a simple way to start noti automatically when your session begins. Howev
 
 ### Advanced Autostart
 
-For more robust and advanced autostart setups (e.g., using systemd to handle automatic restarts), refer to the [Autostart](/src/Autostart.md) documentation. This guide provides detailed instructions for setting up a reliable autostart configuration.
+For more robust and advanced autostart setups, refer to the [Autostart](./Autostart.md). This guide provides detailed instructions for setting up a reliable autostart configuration.
