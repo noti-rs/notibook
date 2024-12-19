@@ -1,11 +1,5 @@
 # Colors
 
-Noti supports various color formats and you can declare with a string which represents single color or a table with extended color configuration.
-Here's a list of possible colors:
-
-- [Fill](#fill)
-- [LinearGradient](#linear-gradient)
-
 ## Fill
 
 To declare fill color use a string in format `"#RGB"`, `"#RRGGBB"` or `"#RRGGBBAA"`:
@@ -17,28 +11,25 @@ foreground = "#A2A2A2"
 border = "#BEBEBEAA"
 ```
 
---- 
+## Gradient
 
-## Linear Gradient
+When defining gradients, use the same property as you would for a single color, but provide a table value instead.
+All gradient configurations share these common properties:
 
-Noti now supports gradients, allowing you to define smooth transitions between colors. Gradients are specified using the `mode`, `degree`, and `colors` attributes.
+| Key    | Type      | Default value | Short description                        |
+| :----- | :-------- | :-----------: | :--------------------------------------- |
+| mode   | `String`  |       -       | Specifies the gradient type              |
+| degree | `u16`     |       -       | Angle of the gradient in degrees         |
+| colors | `Color[]` |       -       | An array of color values (in hex format) |
 
-### Configuration
+### Supported gradient types
 
-Gradients can be defined inline or using a nested table for clarity. The structure includes:
+#### Linear Gradient
 
-- **`mode`**: Specifies the gradient type. Currently, only `"linear-gradient"` is supported.
-- **`degree`**: Sets the angle of the gradient in degrees.
-- **`colors`**: An array of color values (in hex format) that define the gradient.
+Linear gradients create a smooth transition between two or more colors along a straight line.background.
+The transition direction is determined by the degree value, where 0° points upward and the angle increases clockwise.
 
 ```toml
 [theme.normal]
-background = { mode = "linear-gradient", degree = 30, colors = ["#FFF", "#000"] }
-
-[theme.normal.background]
-mode = "linear-gradient"
-degree = 40
-colors = ["#FF00FF", "#00FFFF"]
+background = { mode = "linear-gradient", degree = 30, colors = ["#F00", "#0F0", "#00F"] }]
 ```
-
---- 
