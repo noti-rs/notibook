@@ -27,7 +27,7 @@ You can add noti run to your session startup script to ensure it starts automati
 exec-once = noti run
 ```
 
-This is a simple way to start noti automatically when your session begins. However, note that this approach does not handle cases where the application crashes or encounters errors -— it will not automatically restart `noti` in such situations.
+This is a simple way to start noti automatically when your session begins. However, note that this approach does not handle cases where the application crashes or encounters errors — it will not automatically restart `noti` in such situations.
 
 ### Advanced Autostart
 

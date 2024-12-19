@@ -41,14 +41,15 @@ Child widgets are enclosed in curly braces, with whitespace separating them.
 
 The `FlexContainer` organizes its child widgets either horizontally or vertically.
 
-| Property     | Description                                                              | Type        | Default                                               |
-| ------------ | ------------------------------------------------------------------------ | ----------- | ----------------------------------------------------- |
-| `direction`  | Layout direction (`horizontal` or `vertical`).                           | `Literal`   | -                                                     |
-| `max_width`  | Maximum width of the container.                                          | `UInt`      | MAX                                                   |
-| `max_height` | Maximum height of the container.                                         | `UInt`      | MAX                                                   |
-| `border`     | Border around the container.                                             | `Border`    | Default [border](./ConfigProperties.md#border) values |
-| `spacing`    | Spacing between child widgets.                                           | `Spacing`   | Default spacing values                                |
-| `alignment`  | Horizontal and vertical alignment of content (`start`, `center`, `end`). | `Alignment` | -                                                     |
+| Property                 | Description                                                              | Type        | Default                                               |
+| ------------------------ | ------------------------------------------------------------------------ | ----------- | ----------------------------------------------------- |
+| `direction`              | Layout direction (`horizontal` or `vertical`).                           | `Literal`   | -                                                     |
+| `max_width`              | Maximum width of the container.                                          | `UInt`      | MAX                                                   |
+| `max_height`             | Maximum height of the container.                                         | `UInt`      | MAX                                                   |
+| `border`                 | Border around the container.                                             | `Border`    | Default [border](./ConfigProperties.md#border) values |
+| `spacing`                | Spacing between child widgets.                                           | `Spacing`   | Default spacing values                                |
+| `alignment`              | Horizontal and vertical alignment of content (`start`, `center`, `end`). | `Alignment` | -                                                     |
+| `transparent_background` | Make the background transparent (`true` or `false`)                      | `Literal`   | `false`                                               |
 
 ### Text
 

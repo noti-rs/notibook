@@ -8,6 +8,7 @@
 - [Configuration](./Configuration/Configuration.md)
   - [General](./Configuration/General.md)
   - [Display](./Configuration/Display.md)
+  - [Colors](./Configuration/Colors.md)
   - [Themes](./Configuration/Themes.md)
   - [Apps](./Configuration/Apps.md)
 - [Custom Layout](./Layout/CustomLayout.md)
