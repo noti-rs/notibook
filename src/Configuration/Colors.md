@@ -16,11 +16,11 @@ border = "#BEBEBEAA"
 When defining gradients, use the same property as you would for a single color, but provide a table value instead.
 All gradient configurations share these common properties:
 
-| Key    | Type      | Default value | Short description                        |
-| :----- | :-------- | :-----------: | :--------------------------------------- |
-| mode   | `String`  |       -       | Specifies the gradient type              |
-| degree | `u16`     |       -       | Angle of the gradient in degrees         |
-| colors | `Color[]` |       -       | An array of color values (in hex format) |
+| Key    | Type           | Default value | Short description                        |
+| :----- | :------------- | :-----------: | :--------------------------------------- |
+| mode   | `String`       |       -       | Specifies the gradient type              |
+| degree | `u16`          |       -       | Angle of the gradient in degrees         |
+| colors | `[Color; 2..]` |       -       | An array of color values (in hex format) |
 
 ### Supported gradient types
 

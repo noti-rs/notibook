@@ -15,15 +15,16 @@ Noti supports hot-reloading most configuration changes. Simply save your config 
 
 Before of all properties, need to understand a few primitive types. The complex types like array or table will be explained in place.
 
-| Type                   | Description                                       |
-| ---------------------- | ------------------------------------------------- |
-| `bool`                 | A boolean value                                   |
-| `u8`                   | An unsigned integer of 8 bit                      |
-| `u16`                  | An unsigned integer of 16 bit                     |
-| `String`               | A string,typically used as an enumeration variant |
-| `[..]`                 | Array containing various type. Used as tuple      |
-| [`Color`](./Colors.md) | A color value. Either string or table             |
-| `Path`                 | The path to particular file or directory          |
+| Type                   | Description                                                                                                   |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `bool`                 | A boolean value                                                                                               |
+| `u8`                   | An unsigned integer of 8 bit                                                                                  |
+| `u16`                  | An unsigned integer of 16 bit                                                                                 |
+| `String`               | A string,typically used as an enumeration variant                                                             |
+| `[...]`                | An array containing various type. Used as tuple                                                               |
+| `[T; from..to]`        | An array with elements of type `T`, where the number of elements can vary between `from` and `to` (inclusive) |
+| [`Color`](./Colors.md) | A color value. Either string or table                                                                         |
+| `Path`                 | The path to particular file or directory                                                                      |
 
 ### Configuration Structure
 

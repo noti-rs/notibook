@@ -2,19 +2,19 @@
 
 The `display` section allows you to customize the visual aspects of notifications.
 
-| Property name                       | Description                                     | Type                                                                    | Default value |
-| :---------------------------------- | :---------------------------------------------- | :---------------------------------------------------------------------- | :-----------: |
-| [padding](#padding-margin)          | Spacing from the banner's edge to inner content | `u8` or `[u8, u8]` or `[u8, u8, u8]` or `[u8, u8, u8, u8]` or `Spacing` |       0       |
-| [margin](#padding-margin)           | Spacing from the banner's edge to inner content | `u8` or `[u8, u8]` or `[u8, u8, u8]` or `[u8, u8, u8, u8]` or `Spacing` |       0       |
-| [image](#image)                     | Image properties                                | `Image`                                                                 |       -       |
-| [border](#border)                   | Border properties                               | `Border`                                                                |       -       |
-| [text](#text)                       | Text properties (alias for `title` and `body`)  | `Text`                                                                  |       -       |
-| [title](#text)                      | Title text properties                           | `Text`                                                                  |       -       |
-| [body](#text)                       | Body text properties                            | `Text`                                                                  |       -       |
-| [markup](#markup)                   | Enables HTML markup                             | `bool`                                                                  |     true      |
-| [timeout](#timeout)                 | Banner timeout                                  | `u16` or `Timeout`                                                      |       0       |
-| [layout](../Layout/CustomLayout.md) | Custom layout path                              | `Path`                                                                  |   "default"   |
-| [theme](./themes)                   | Theme name                                      | `String`                                                                |       -       |
+| Property name                       | Description                                     | Type                              | Default value |
+| :---------------------------------- | :---------------------------------------------- | :-------------------------------- | :-----------: |
+| [padding](#padding-margin)          | Spacing from the banner's edge to inner content | `u8` or `[u8; 1..4]` or `Spacing` |       0       |
+| [margin](#padding-margin)           | Spacing from the banner's edge to inner content | `u8` or `[u8; 1..4]` or `Spacing` |       0       |
+| [image](#image)                     | Image properties                                | `Image`                           |       -       |
+| [border](#border)                   | Border properties                               | `Border`                          |       -       |
+| [text](#text)                       | Text properties (alias for `title` and `body`)  | `Text`                            |       -       |
+| [title](#text)                      | Title text properties                           | `Text`                            |       -       |
+| [body](#text)                       | Body text properties                            | `Text`                            |       -       |
+| [markup](#markup)                   | Enables HTML markup                             | `bool`                            |     true      |
+| [timeout](#timeout)                 | Banner timeout                                  | `u16` or `Timeout`                |       0       |
+| [layout](../Layout/CustomLayout.md) | Custom layout path                              | `Path`                            |   "default"   |
+| [theme](./themes)                   | Theme name                                      | `String`                          |       -       |
 
 ## Padding & Margin
 
