@@ -45,7 +45,7 @@ You can import configuration files from other files:
 ```toml
 use = [
     "$XDG_CONFIG_HOME/noti/themes.toml",
-    "~/layouts/layout.toml",
+    "~/.config/noti/layouts/layout.toml",
     "./apps/*"
 ]
 ```
