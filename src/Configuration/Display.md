@@ -7,6 +7,7 @@ The `display` section allows you to customize the visual aspects of notification
 | [padding](#padding-margin)          | Spacing from the banner's edge to inner content | `u8` or `[u8; 1..4]` or `Spacing` |       0       |
 | [margin](#padding-margin)           | Spacing from the banner's edge to inner content | `u8` or `[u8; 1..4]` or `Spacing` |       0       |
 | [image](#image)                     | Image properties                                | `Image`                           |       -       |
+| [icons](#icons)                     | Icons properties                                | `Icons`                           |       -       |
 | [border](#border)                   | Border properties                               | `Border`                          |       -       |
 | [text](#text)                       | Text properties (alias for `title` and `body`)  | `Text`                            |       -       |
 | [title](#text)                      | Title text properties                           | `Text`                            |       -       |
@@ -95,18 +96,37 @@ Typically, the notification includes an image or icon, which is displayed on the
 
 Here's a table of `Image` properties:
 
-| Property name   | Description                                                                                                                                   | Type                                                                    | Default value |
-| :-------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------- | :-----------: |
-| max_size        | Sets the max size for image and resizes it when width or height of image exceeds this value                                                   | `u16`                                                                   |      64       |
-| rounding        | Value used to round image corners                                                                                                             | `u16`                                                                   |       0       |
-| margin          | Spacing around image. If there is no space for image, the image will be squished.                                                             | `u8` or `[u8, u8]` or `[u8, u8, u8]` or `[u8, u8, u8, u8]` or `Spacing` |       0       |
-| resizing_method | Resizing method for image when it exceeds `max_size`. Possible values: `"gaussian"`, `"nearest"`, `"triandle"`, `"catmull-rom"`, `"lanczos3"` | `String`                                                                |  "gaussian"   |
+| Property name   | Description                                                                                                                                   | Type                              | Default value |
+| :-------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------- | :-----------: |
+| max_size        | Sets the max size for image and resizes it when width or height of image exceeds this value                                                   | `u16`                             |      64       |
+| rounding        | Value used to round image corners                                                                                                             | `u16`                             |       0       |
+| margin          | Spacing around image. If there is no space for image, the image will be squished.                                                             | `u8` or `[u8; 1..4]` or `Spacing` |       0       |
+| resizing_method | Resizing method for image when it exceeds `max_size`. Possible values: `"gaussian"`, `"nearest"`, `"triandle"`, `"catmull-rom"`, `"lanczos3"` | `String`                          |  "gaussian"   |
 
 ```toml
 [display.image]
 max_size = 32
 rounding = 10
 ```
+
+## Icons
+
+If application doesn't provide any image but app-icon, then it will be treated as image.
+
+The `Icons` table:
+
+| Property name | Description                                                                                                                               | Type         | Default value |
+| :------------ | :---------------------------------------------------------------------------------------------------------------------------------------- | :----------- | :-----------: |
+| theme         | Icon theme like Adwaita, Papirus...                                                                                                       | `Strng`      |   "Adwaita"   |
+| size          | Concrete sizes of the icon. Will be picked the first one which found in system resources. Ordering matters - searches from first to last. | `[u16; 1..]` |   [64, 32]    |
+
+```toml
+[display.icons]
+theme = "Papirus"
+size = [64, 32, 16]
+```
+
+> **Note**: Since app-icon threated as image, the image properties will be applied to icon, even the `max_size`.
 
 ## Border
 
