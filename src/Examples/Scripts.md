@@ -20,25 +20,57 @@ VOL_UP=$ICONS/volup.svg
 VOL_DOWN=$ICONS/voldown.svg
 VOL_MUTE=$ICONS/volmute.svg
 
+URGENCY=low
 APP_NAME=volume
-ID=9999
 
-case $1 in
-  up)
-    pamixer -i 5 -u
-    noti send -a $APP_NAME -u "low" -i $VOL_UP -r $ID "Volume: $(pamixer --get-volume)%"
-    ;;
-  down)
-    pamixer -d 5 -u
-    noti send -a $APP_NAME -u "low" -i $VOL_DOWN -r $ID "Volume: $(pamixer --get-volume)%"
-    ;;
-  mute)
+ID_TMPFILE=/tmp/vol-noti-id
+
+if [[ ! -f $ID_TMPFILE ]]; then
+  touch $ID_TMPFILE
+fi
+
+ID=$(<$ID_TMPFILE)
+
+send_notification() {
+    local icon=$1
+    local message=$2
+    local urgency=${3:-$URGENCY}
+
+    if [[ $ID ]]; then
+        noti send -a "$APP_NAME" -u "$urgency" -i "$icon" -r "$ID" "$message"
+    else
+        noti send -a "$APP_NAME" -u "$urgency" -i "$icon" "$message" --print-id > "$ID_TMPFILE"
+    fi
+}
+
+update_volume() {
+    local change=$1
+    pamixer $change 5 -u
+    send_notification "$VOL_UP" "Volume: $(pamixer --get-volume)%"
+}
+
+toggle_mute() {
     pamixer -t
     if $(pamixer --get-mute); then
-      noti send -a $APP_NAME -u "critical" -i $VOL_MUTE -r $ID "Volume muted"
+        send_notification "$VOL_MUTE" "Volume muted" "critical"
     else
-      noti send -a $APP_NAME -u "critical" -i $VOL_UP -r $ID "Volume unmuted"
+        send_notification "$VOL_MUTE" "Volume unmuted" "critical"
     fi
+}
+
+case $1 in
+up)
+    update_volume "-i"
+    ;;
+down)
+    update_volume "-d"
+    ;;
+mute)
+    toggle_mute
+    ;;
+*)
+    echo "Usage: $0 { 'up' | 'down' | 'mute' }"
+    exit 1
     ;;
 esac
 ```
@@ -74,27 +106,48 @@ This script allows you to adjust the screen brightness and displays notification
 ```bash
 #!/bin/bash
 
-ID=9998
+ID_TMPFILE=/tmp/brightness-noti-id
+
+if [[ ! -f $ID_TMPFILE ]]; then
+  touch $ID_TMPFILE
+fi
+
+ID=$(<$ID_TMPFILE)
+
+send_notification() {
+    local value=$1
+
+    if [[ $ID ]]; then
+        noti send -a "brightness" -u low -i $ICONS/brightness.svg -r $ID "Brightness: $value%"
+    else
+        noti send -a "brightness" -u low -i $ICONS/brightness.svg "Brightness: $value%" > $ID_TMPFILE
+    fi
+}
+
+calculate_percentage() {
+    local value=$1
+
+	percentage=$(echo "scale=0; $brightness * 100 / 1515" | bc -l)
+	rounded_percentage=$(echo "($percentage + 5) / 10 * 10" | bc)
+
+    echo $rounded_percentage
+}
 
 case $1 in
 up)
 	brightnessctl s +10%
 	brightness=$(brightnessctl g)
-	percentage=$(echo "scale=0; $brightness * 100 / 1515" | bc -l)
-
-	rounded_percentage=$(echo "($percentage + 5) / 10 * 10" | bc)
-
-	noti send -a "brightness" -u low -i $ICONS/brightness.svg -r $ID "Brightness: $rounded_percentage%"
+    send_notification $(calculate_percentage brightness)
 	;;
 down)
 	brightnessctl s 10%-
 	brightness=$(brightnessctl g)
-	percentage=$(echo "scale=0; $brightness * 100 / 1515" | bc -l)
-
-	rounded_percentage=$(echo "($percentage + 5) / 10 * 10" | bc)
-
-	noti send -a "brightness" -u low -i $ICONS/brightness.svg -r $ID "Brightness: $rounded_percentage%"
+    send_notification $(calculate_percentage brightness)
 	;;
+*)
+    echo "Usage: $0 {up|down}"
+    exit 1
+    ;;
 esac
 ```
 
@@ -127,18 +180,31 @@ This script switches between keyboard layouts and displays a notification showin
 ### Script:
 
 ```bash
+
 #!/bin/sh
 
-ID=9997
-keyboard="your-keyboard-name"
+ID_TMPFILE=/tmp/kb-noti-id
+
+if [[ ! -f $ID_TMPFILE ]]; then
+  touch $ID_TMPFILE
+fi
+
+ID=$(<$ID_TMPFILE)
+
+KEYBOARD="your-keyboard-name" # use hyprctl devices to see all connected keyboards
 
 # NOTE: kb is https://github.com/JarKz/hyprland_kb_switcher/
 # but you can just use `hyprctl switchxkblayout $keyboard next`
 kb switch
 
-value=$(hyprctl devices | grep -i $keyboard -A 2 | tail -n1 | cut -f3,4 -d' ')
+VALUE=$(hyprctl devices | grep -i $KEYBOARD -A 2 | tail -n1 | cut -f3,4 -d' ')
 
-noti send -a "kb" -u low -i $ICONS/kb.svg -r $ID "$value"
+if [[ $ID ]]; then
+    noti send -a "kb" -u low -i $ICONS/kb.svg -r $ID "$VALUE"
+else
+    noti send -a "kb" -u low -i $ICONS/kb.svg "$VALUE" --print-id > $ID_TMPFILE
+fi
+
 ```
 
 > **Note**:  
