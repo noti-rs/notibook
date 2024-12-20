@@ -118,11 +118,6 @@ If set to `"none"`, the idle timeout behavior is disabled.
 idle_threshold = "5 min"
 ```
 
-> **WARNING:**
->
-> Changes to the `idle_threshold` setting cannot be applied via hot-reload.
-> To apply a new value, a full restart of the application is required.
-
 ## Limit
 
 The maximum number of notifications that can be displayed at once. Once this limit is reached, any new notifications will be queued and shown once the currently displayed ones either time out or are manually dismissed.
