@@ -9,7 +9,7 @@ Noti looks for configuration files in the following locations (in order of prior
 
 ### Hot Reload
 
-Noti supports hot-reloading most configuration changes. Simply save your config file, and Noti will automatically apply the new settings.
+Noti supports hot-reloading configuration changes. Simply save your config file, and Noti will automatically apply the new settings.
 
 ### Types
 
