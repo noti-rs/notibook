@@ -4,7 +4,7 @@
 
 - **Native Wayland Support**: Built from the ground up for Wayland environments
 - **Highly-customizable**: Tailor your notifications to suit your preferences
-- **Per-App Styling**: Differentiate notifications with app-specific designs
+- **Per-App Styling**: Unique notification styles for different applications
 - **Modern Design**: Clean, minimalist approach to desktop notifications
 
 Whether you're a developer who wants to integrate notifications into your Wayland environment or a regular user looking for a more customizable desktop experience, Noti is here to provide a simple, powerful solution.
