@@ -7,7 +7,7 @@ Layouts in `Noti` are built using **widgets** and **type values**:
 Widgets are the building blocks of layouts. They are graphic elements with customizable properties. The available widgets are:
 
 - **FlexContainer**: A container that organizes its child widgets.
-- **Text**: Displays text, such as the title or body.
+- **Text**: Displays text, such as the summary or body.
 - **Image**: Displays an image.
 
 ## Type Values

@@ -1,6 +1,6 @@
 # Custom Layout
 
-The `Noti` application allows users to **customize the layout of notification banners**, giving you complete control over how your notifications are displayed. Whether you want to move an image to the right, swap the title and body, or pin the title to the top, `Noti` makes it possible through custom layout files.
+The `Noti` application allows users to **customize the layout of notification banners**, giving you complete control over how your notifications are displayed. Whether you want to move an image to the right, swap the summary and body, or pin the summary to the top, `Noti` makes it possible through custom layout files.
 
 To customize a layout, you define it in a `.noti` file and reference it in your main configuration file.
 

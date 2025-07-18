@@ -26,7 +26,7 @@ To nest widgets, use the `children` property inside a `FlexContainer`:
 
 ```noti
 FlexContainer() {
-    Text(kind = title)
+    Text(kind = summary)
     Image()
 }
 ```
@@ -53,11 +53,11 @@ The `FlexContainer` organizes its child widgets either horizontally or verticall
 
 ### Text
 
-The `Text` widget is used for titles and body text. Specify the kind of text to display.
+The `Text` widget is used for summaries and body text. Specify the kind of text to display.
 
-| Property | Description                                 | Type      | Default |
-| -------- | ------------------------------------------- | --------- | ------- |
-| `kind`   | Type of text (`title`/`summary` or `body`). | `Literal` | -       |
+| Property | Description                         | Type      | Default |
+| -------- | ----------------------------------- | --------- | ------- |
+| `kind`   | Type of text (`summary` or `body`). | `Literal` | -       |
 
 ### Image
 

@@ -2,20 +2,20 @@
 
 The `display` section allows you to customize the visual aspects of notifications.
 
-| Property name                       | Description                                     | Type                              | Default value |
-| :---------------------------------- | :---------------------------------------------- | :-------------------------------- | :-----------: |
-| [padding](#padding-margin)          | Spacing from the banner's edge to inner content | `u8` or `[u8; 1..4]` or `Spacing` |       0       |
-| [margin](#padding-margin)           | Spacing from the banner's edge to inner content | `u8` or `[u8; 1..4]` or `Spacing` |       0       |
-| [image](#image)                     | Image properties                                | `Image`                           |       -       |
-| [icons](#icons)                     | Icons properties                                | `Icons`                           |       -       |
-| [border](#border)                   | Border properties                               | `Border`                          |       -       |
-| [text](#text)                       | Text properties (alias for `title` and `body`)  | `Text`                            |       -       |
-| [title](#text)                      | Title text properties                           | `Text`                            |       -       |
-| [body](#text)                       | Body text properties                            | `Text`                            |       -       |
-| [markup](#markup)                   | Enables HTML markup                             | `bool`                            |     true      |
-| [timeout](#timeout)                 | Banner timeout                                  | `u16` or `Timeout`                |       0       |
-| [layout](../Layout/CustomLayout.md) | Custom layout path                              | `Path`                            |   "default"   |
-| [theme](./themes)                   | Theme name                                      | `String`                          |       -       |
+| Property name                       | Description                                      | Type                              | Default value |
+| :---------------------------------- | :----------------------------------------------- | :-------------------------------- | :-----------: |
+| [padding](#padding-margin)          | Spacing from the banner's edge to inner content  | `u8` or `[u8; 1..4]` or `Spacing` |       0       |
+| [margin](#padding-margin)           | Spacing from the banner's edge to inner content  | `u8` or `[u8; 1..4]` or `Spacing` |       0       |
+| [image](#image)                     | Image properties                                 | `Image`                           |       -       |
+| [icons](#icons)                     | Icons properties                                 | `Icons`                           |       -       |
+| [border](#border)                   | Border properties                                | `Border`                          |       -       |
+| [text](#text)                       | Text properties (alias for `summary` and `body`) | `Text`                            |       -       |
+| [summary](#text)                    | Summary text properties                          | `Text`                            |       -       |
+| [body](#text)                       | Body text properties                             | `Text`                            |       -       |
+| [markup](#markup)                   | Enables HTML markup                              | `bool`                            |     true      |
+| [timeout](#timeout)                 | Banner timeout                                   | `u16` or `Timeout`                |       0       |
+| [layout](../Layout/CustomLayout.md) | Custom layout path                               | `Path`                            |   "default"   |
+| [theme](./themes)                   | Theme name                                       | `String`                          |       -       |
 
 ## Padding & Margin
 
@@ -153,7 +153,7 @@ margin = { right = 15 }
 
 ## Text
 
-The application has **title** and **body** properties, both treated as `Text`. A new `text` property can be used for both the title and body at once. Use `text` when the same value applies to both, or set them separately if needed.
+The application has **summary** and **body** properties, both treated as `Text`. A new `text` property can be used for both the summary and body at once. Use `text` when the same value applies to both, or set them separately if needed.
 
 The `Text` table:
 
@@ -174,13 +174,13 @@ wrap = false
 ellipsize_at = "middle"
 font_size = 18
 
-[display.title]
+[display.summary]
 style = "bold"
 ```
 
 > **Property priority**:
 >
-> 1. Use `title` or `body` first.
+> 1. Use `summary` or `body` first.
 > 2. If missing, use the `text` property.
 > 3. If still missing, default values apply.
 
